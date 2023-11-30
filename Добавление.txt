@@ -1,0 +1,16 @@
+            using(SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string path = Photo.ImageLocation;
+                SqlCommand sqlCommand = new SqlCommand(
+                $"insert into Product (ProductArticleNumber, ProductName, ProductDescription, ProductCategory, " +
+                $"ProductManufacturer, ProductCost, ProductQuantityInStock, ProductStatus, ProductPhoto) values ('{Articule.Text}','{productName.Text}','{Description.Text}', " +
+                $"'{Category.Text}','{Manufacturer.Text}', '{Price.Text}', '{QuantityINStock.Text}', '{Status.Text}', '{photoPath}')",
+                conn);
+
+                sqlCommand.ExecuteNonQuery();
+
+                MessageBox.Show("класс");
+
+         
+            }

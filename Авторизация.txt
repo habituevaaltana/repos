@@ -1,0 +1,11 @@
+<html>
+<head>
+</head>
+<body>
+<h1>Авторизация</h1>
+<p>Логин</p></br> <input type = "text">
+<p>Пароль</p></br>
+<input placeholder = "Введите пароль" type = "text"><br><br>
+<button>Войти</button>
+</body>
+</html>

@@ -1,0 +1,95 @@
+USE [DEMO]
+go
+
+
+create table ФизЛица
+(
+	id_ФизЛица int primary key not null,
+	[ФИО] nvarchar(55) not null,
+	[Паспортные данные] nvarchar(55) not null,
+	[Дата рождения] date not null,
+	[Адрес] nvarchar(75) not null,
+)
+go
+
+create table ЮрЛица 
+(
+	id_ЮрЛица int not null primary key,
+	[Название компании] nvarchar(50) not null,
+	Адрес nvarchar(50) not null,
+	ИНН bigint not null,
+	[p/c] bigint not null,
+	БИК int not null,
+	[ФИО руководителя] nvarchar(50) not null,
+	[ФИО контакного лица] nvarchar(50) not null,
+	[Телефон контакного лица] nvarchar(50) not null
+)
+go
+
+create table ТипКлиент
+(
+	id_ТипКлиента int primary key not null,
+	id_клиента int not null,
+	Пароль nvarchar(50) not null,
+	Почта nvarchar(70) not null,
+	foreign key (id_клиента) references ФизЛица(id_ФизЛица),
+	foreign key (id_клиента) references ЮрЛица(id_ЮрЛица)
+)
+go
+create table Заказ
+(
+	id_заказа int not null primary key,
+	id_ТипКлиента int null references ТипКлиент(id_ТипКлиента),
+	[Номер заказа] nvarchar(50),
+	[Дата создания] date not null,
+	Статус nvarchar(50) not null,
+	[Дата закрытия] date,
+	[Время выполнения заказа] int not null,
+)
+go
+create table Услуги
+(
+	id_услуги int not null primary key,
+	[Наименование услуги] nvarchar(50) not null,
+	[Код услуги] nvarchar(50) not null,
+	[Срок выполнения] int not null,
+	[Среднее отклонение] float not null,
+	Стоимость int not null,
+	[Стоимость ЗАО "Русская косметика"] int not null,
+)
+go
+
+go
+create table УслугиЗаказа
+(
+	id_Услуги int not null references Услуги(id_услуги),
+	id_Заказа int not null references Заказ(id_заказа),
+	primary key(id_Услуги, id_Заказа)
+)
+go
+
+create table Должность
+(
+	id_должности int not null primary key,
+	[Наименование должности] nvarchar(50),
+)
+go
+create table Сотрудники 
+(
+	id_сотрудника int not null primary key,
+	id_должности int not null references Должность(id_должности),
+	ФИО nvarchar(50) not null,
+	Логин nvarchar(50) not null,
+	Пароль nvarchar(50) not null,
+	[Последний вход] datetime not null,
+)
+go
+
+create table УслугиСотрудники
+(
+	id_Услуги int not null references Услуги(id_услуги),
+	id_Сотрудника int not null references Сотрудники(id_сотрудника),
+	primary key(id_Услуги, id_Сотрудника)
+)
+
+
